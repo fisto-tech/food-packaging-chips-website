@@ -951,7 +951,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, observerOptions);
 
-    const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up');
+    const revealElements = document.querySelectorAll('.reveal-left, .reveal-right, .reveal-up, .text-reveal-trigger');
     revealElements.forEach(el => revealObserver.observe(el));
   }
   initScrollReveal();

@@ -1068,7 +1068,7 @@ body {
 .category-banner-section {
   padding: 5vw 5vw 5vw 5vw;
   /* Added top padding */
-  background-color: transparent;
+  background-color: #f4dfce;
   /* Remove dark background */
   display: flex;
   justify-content: center;
@@ -1078,7 +1078,7 @@ body {
 .banner-card {
   width: 100vw;
   max-width: 1400px;
-  background-color: #ffb72b;
+  background-color: #d88f44;
   border-radius: 2vw;
   display: flex;
   gap: 5vw;
@@ -1153,28 +1153,30 @@ body {
 .banner-content {
   flex: 1;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 2vw 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2vw 2vw 2vw 0;
   /* gap: 1.5vw; */
   color: white;
   z-index: 2;
 }
 
 .banner-text-group {
+  flex: 1;
+
   margin-right: 2vw;
 }
 
 .banner-text-group h2 {
-  font-size: 2.5vw;
+  font-size: 2vw;
   font-weight: 700;
   line-height: 1.1;
   margin-bottom: 0.2vw;
 }
 
 .banner-text-group .highlight-number {
-  font-size: 5vw;
+  font-size: 4vw;
   font-weight: 800;
   font-family: 'Puritan', sans-serif !important;
 }
@@ -1199,8 +1201,7 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   white-space: nowrap;
-  margin-top: 1vw;
-  /* Space from text */
+  /* margin-top: 1vw; removed for row layout */
 }
 
 .explore-btn:hover {
@@ -1960,7 +1961,7 @@ body {
 /* Soft Green */
 
 .panel h2 {
-  font-family: 'Puritan', sans-serif !important;
+  font-family: 'Montserrat', sans-serif !important;
   font-size: 34px;
   font-weight: 700;
   line-height: 1.2;
@@ -1973,12 +1974,17 @@ body {
 
 .panel img {
   width: 100%;
-  height: 220px;
+  height: 280px;
   border-radius: 8px;
   background: transparent;
   object-fit: contain;
   margin-bottom: 25px;
   filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.25));
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.panel:hover img {
+  transform: scale(1.15);
 }
 
 .panel h3 {
@@ -2066,7 +2072,8 @@ body {
 .footer-logo {
   height: 40px;
   margin-bottom: 20px;
-  filter: brightness(0) invert(1);
+  margin-left: 100px;
+
 }
 
 .brand-col p {
@@ -2533,6 +2540,48 @@ body {
   transform: translate(0, 0);
 }
 
+/* Text Reveal Animation */
+.reveal-text-word {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 0.1em;
+}
+
+.reveal-text-word:last-child {
+  margin-right: 0;
+}
+
+.reveal-text-word > span {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.5, 0, 0, 1), opacity 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.text-reveal-trigger.active .reveal-text-word > span {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Line Reveal Animation */
+.reveal-text-line {
+  overflow: hidden;
+  display: block;
+}
+
+.reveal-text-line > * {
+  display: block;
+  transform: translateY(110%);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.5, 0, 0, 1), opacity 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.text-reveal-trigger.active .reveal-text-line > * {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 /* Clients Section */
 .clients-section {
   padding: 40px 5%;
@@ -2604,7 +2653,7 @@ body {
 
 /* Styled text for product panels */
 .panel h2 .styled-text {
-  font-family: 'Puritan', sans-serif !important;
+  font-family: 'Montserrat', sans-serif !important;
   color: #F9D976;
   font-size: 1.1em;
 
@@ -2641,7 +2690,7 @@ body {
   color: #1a1a1a !important;
   /* Dark color for first word */
   font-weight: 900 !important;
-  font-family: 'Puritan', sans-serif !important;
+  font-family: 'Montserrat', sans-serif !important;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -2658,7 +2707,7 @@ body {
 .panel h2 .styled-text {
   align-self: flex-end !important;
   /* next word align end */
-  font-family: 'Puritan', sans-serif !important;
+  font-family: 'Montserrat', sans-serif !important;
   color: var(--text-color, #F9D976) !important;
 
   font-size: 1.2em !important;
