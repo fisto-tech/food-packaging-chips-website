@@ -680,7 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!section || !canvas) return;
 
     const context = canvas.getContext("2d");
-    const frameCount = 144;
+    const frameCount = 143;
     const images = [];
 
     canvas.width = 1920;
@@ -691,7 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
-      img.src = `images/products/background-new-images/${(i + 1).toString().padStart(5, '0')}.webp`;
+      img.src = `images/products/background-new-images/${(i + 2).toString().padStart(5, '0')}.webp`;
       images.push(img);
       if (i === 0) {
         img.onload = () => {
@@ -823,40 +823,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!cardsContainer || cards.length === 0) return;
 
-    // Define background colors corresponding to each card
-    const bgColors = [
-      '#fbf8cc', // Card 1: Freshness (Soft Yellow)
-      '#ffcfd2', // Card 2: Leak-Proof (Soft Red)
-      '#b9fbc0', // Card 3: Shelf Life (Soft Green)
-      '#a3c4f3', // Card 4: Print Quality (Soft Blue)
-      '#cfbaf0'  // Card 5: Eco-Friendly (Soft Purple)
-    ];
+    // Define background colors corresponding to each card (Removed so the background remains white like the UI)
+    // const bgColors = [
+    //   '#fbf8cc', // Card 1: Freshness (Soft Yellow)
+    //   '#ffcfd2', // Card 2: Leak-Proof (Soft Red)
+    //   '#b9fbc0', // Card 3: Shelf Life (Soft Green)
+    //   '#a3c4f3', // Card 4: Print Quality (Soft Blue)
+    //   '#cfbaf0'  // Card 5: Eco-Friendly (Soft Purple)
+    // ];
 
     if (benefitsSection) {
-      benefitsSection.style.transition = 'background-color 0.8s ease';
-      benefitsSection.style.backgroundColor = bgColors[0];
+      benefitsSection.style.backgroundColor = '#ffffff';
     }
 
     let currentBgIndex = -1;
-    // Update background color based on active card
+    // Update background color based on active card (Removed)
     window.addEventListener('scroll', () => {
       if (!benefitsSection) return;
       let activeIndex = 0;
-      
+
       cards.forEach((card, index) => {
         const rect = card.getBoundingClientRect();
         // The card sticks at offsetTop = 20 + index * 20.
         // We set it as active if it is within half the screen of its sticky position.
         const stickyPosition = 20 + index * 20;
-        if (rect.top <= stickyPosition + window.innerHeight / 2) {
-          activeIndex = index;
-        }
       });
-      
-      if (currentBgIndex !== activeIndex) {
-        currentBgIndex = activeIndex;
-        benefitsSection.style.backgroundColor = bgColors[activeIndex % bgColors.length];
-      }
     });
 
     cardsContainer.style.setProperty('--cards-count', cards.length);
@@ -1010,3 +1001,86 @@ if (mainImgEl && topImgEl && bottomImgEl) {
   // Start auto slide
   resetAboutAutoSlide();
 }
+
+// --- Benefits Parallax Background ---
+function initBenefitsParallax() {
+    const bgContainer = document.getElementById('benefits-parallax-bg');
+    if (!bgContainer || typeof gsap === 'undefined') return;
+
+    // We duplicate them 5 times for a very dense effect
+    const uniqueImages = 22;
+    const totalElements = 110; // 22 * 5
+    
+    for (let i = 0; i < totalElements; i++) {
+        const imgIndex = (i % uniqueImages) + 1;
+        const img = document.createElement('img');
+        img.src = `images/benefits-section-bg-image/img-${imgIndex}.png`;
+        img.className = 'benefit-bg-item';
+        
+        // Depth determines size, blur, and scroll speed to create a 3D effect
+        const depth = Math.random(); // 0 (far) to 1 (close)
+        
+        let size, blurAmount, yMovementRange, opacity;
+        
+        if (depth < 0.2) {
+            // Very close: Large, blurred, fast moving
+            size = Math.random() * 80 + 120; // 120px - 200px
+            blurAmount = Math.random() * 4 + 2; // 2px - 6px blur
+            yMovementRange = 900;
+            opacity = 0.95;
+        } else if (depth > 0.7) {
+            // Very far: Small, slightly blurred, slow moving
+            size = Math.random() * 25 + 15; // 15px - 40px
+            blurAmount = Math.random() * 2 + 1; // 1px - 3px blur
+            yMovementRange = 200;
+            opacity = 0.4;
+        } else {
+            // Mid-ground: Normal size, sharp focus, normal speed
+            size = Math.random() * 70 + 40; // 40px - 110px
+            blurAmount = 0; // In focus
+            yMovementRange = 500;
+            opacity = 1;
+        }
+        
+        img.style.width = `${size}px`;
+        img.style.height = `${size}px`;
+        
+        // Spread evenly vertically, but push horizontally to the edges (left/right) to avoid the card in the middle
+        const isLeft = Math.random() > 0.5;
+        // Left side: -5% to 30%, Right side: 70% to 105% (allows some overlap off-screen)
+        const horizontalPos = isLeft ? (Math.random() * 35 - 5) : (70 + Math.random() * 35);
+        img.style.left = `${horizontalPos}%`; 
+        
+        // Allow slightly off-screen vertical spawning for smoother entry
+        img.style.top = `${Math.random() * 120 - 10}%`;
+        
+        // Apply rotation, blur, opacity
+        const startRotation = Math.random() * 360;
+        img.style.transform = `rotate(${startRotation}deg)`;
+        if (blurAmount > 0) {
+            img.style.filter = `blur(${blurAmount}px)`;
+        }
+        img.style.opacity = opacity;
+        
+        bgContainer.appendChild(img);
+        
+        // GSAP Parallax Animation
+        // Direction can be up or down
+        const direction = Math.random() > 0.5 ? 1 : -1;
+        const yMovement = (Math.random() * (yMovementRange / 2) + (yMovementRange / 2)) * direction;
+        
+        gsap.to(img, {
+            y: yMovement,
+            rotation: `+=${(Math.random() * 180 + 90) * direction}`,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".benefits-section",
+                start: "top bottom", 
+                end: "bottom top", 
+                scrub: 1
+            }
+        });
+    }
+}
+
+initBenefitsParallax();
