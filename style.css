@@ -2471,7 +2471,7 @@ body.preloader-done {
   color: #e3000f !important;
   font-size: 1em !important;
   text-transform: none;
-  margin-left: 1.5em; /* Create that indented look */
+  margin-left: 2.5em; /* Create that indented look */
 }
 
 /* Reduce Footer height */
@@ -2507,7 +2507,7 @@ body.preloader-done {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  align-self: center;
+  align-items: center;
   line-height: 0.9;
   width: 100%;
   padding: 0 20px;
@@ -2522,7 +2522,7 @@ body.preloader-done {
   color: #e3000f !important;
   font-size: 1em !important;
   text-transform: none;
-  margin-left: 1.5em; /* Create that indented look */
+  margin-left: 2.5em; /* Create that indented look */
 }
 
 /* --- Fix Background Colors --- */
